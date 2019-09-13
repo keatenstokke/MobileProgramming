@@ -1,22 +1,42 @@
 package com.example.calculator_1;
 
+// Default libraries that are imported
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+// Class of the main activity
+public class MainActivity extends AppCompatActivity{
 
-    private double currentNum;
+    // Variables that the entire class can use
+    // Double variables to hold numbers from the screen - anything can be represented as a double, standard integers just have ".0" attached to them
+    private double invertedValue;
+    private double firstValue;
+    private double secondValue;
+    private double resultValue;
+    private double currentValueDouble;
+
+    // The value of the screen in string form
+    private String currentValueString;
+
+    // Boolean variables to signify which operation is in use
+    private boolean addUsed = false;
+    private boolean subtractUsed =  false;
+    private boolean divideUsed =  false;
+    private boolean multiplyUsed =  false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initializing the results screen to display the numbers
+        // Initializing the results screen and the procedure screen to display the numbers
         final TextView resultsScreen = findViewById(R.id.resultsScreen);
+        final TextView procedureScreen = findViewById(R.id.procedureScreen);
 
         // Initializing each of the operation buttons for the calculator
         final Button divideBtn = findViewById(R.id.divideBtn);
@@ -25,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         final Button addBtn = findViewById(R.id.addBtn);
         final Button equalsBtn = findViewById(R.id.equalsBtn);
         final Button decimalBtn = findViewById(R.id.decimalBtn);
+        final Button negateBtn = findViewById(R.id.negateBtn);
 
         // Initializing each of the numerical buttons for the calculator
         final Button zeroBtn = findViewById(R.id.zeroBtn);
@@ -48,101 +69,381 @@ public class MainActivity extends AppCompatActivity {
 
                 // Select what to do when a distinct button is pressed
                 switch(id){
-                    // Defining the procedure for the operation buttons
-                    // When button "+/-" is pressed
+                    // Defining the procedure for each of the operation buttons
+
+                    // When button "+/-" is pressed [negate/invert]
                     case R.id.negateBtn:
-                        // If current number is positive, convert to negative
-
-                        // Else if number is negative, convert to positive
-
+                        // Read the current value from the results screen and store in its own variable
+                        invertedValue = Double.valueOf(resultsScreen.getText().toString());
+                        // If current number is positive
+                        if(firstValue > 0){
+                            // Convert current number to negative by multiplying -1
+                            invertedValue = invertedValue * -1;
+                            // Copy the newly computed result to the results screen for further use
+                            resultsScreen.setText(Double.toString(invertedValue));
+                        }
+                        // If current number is negative
+                        else if(invertedValue < 0){
+                            // Convert current number to positive by multiplying -1
+                            invertedValue = invertedValue * -1;
+                            // Copy the newly computed result to the results screen for further use
+                            resultsScreen.setText(Double.toString(invertedValue));
+                        }
+                        // If the current number is 0 or 0.0, do nothing
+                        else if(invertedValue == 0 || resultsScreen.getText().toString() == "0.0"){
+                            // Print the same value read back to the results screen
+                            resultsScreen.setText(Double.toString(invertedValue));
+                        }
 
                         break;
-                    // When button '/' is pressed
+
+                    // When button '/' is pressed [divide]
                     case R.id.divideBtn:
-                        resultsScreen.append("/");
+                        // If the divide function hasn't been used, compute for the first time
+                        if(divideUsed == false){
+                            // Retrieve the first value entered into the results screen
+                            firstValue = Double.valueOf(resultsScreen.getText().toString());
+                            // Add the value from the results screen to the procedure screen so the user can track their commands
+                            procedureScreen.setText(Double.toString(firstValue));
+                            // Append the operation used to the procedure screen so the user can track what operation they selected
+                            procedureScreen.append("/");
+                            // Reset the results screen with a zero ('0') so that the user can enter in the next number
+                            resultsScreen.setText("0");
+                            // Set the text color of the button to white so the user can see that it is actively selected
+                            divideBtn.setTextColor(Color.WHITE);
+                            // Set the operation variable to true so these steps won't be repeated
+                            divideUsed = true;
+                        }
+                        // FIXME: Add support for the operation being used multiple times in a row without pressing '='
+                        else{
+                            divideBtn.setTextColor(Color.BLACK);
+                            secondValue = Double.valueOf(resultsScreen.getText().toString());
+                            resultValue = firstValue / secondValue;
+                            resultsScreen.setText(Double.toString(resultValue));
+                        }
 
                         break;
-                    // When button '*' is pressed
+
+                    // When button '*' is pressed [multiply]
                     case R.id.multiplyBtn:
-                        resultsScreen.append("*");
+                        // If the multiply function hasn't been used, compute for the first time
+                        if(multiplyUsed == false){
+                            // Retrieve the first value entered into the results screen
+                            firstValue = Double.valueOf(resultsScreen.getText().toString());
+                            // Add the value from the results screen to the procedure screen so the user can track their commands
+                            procedureScreen.setText(Double.toString(firstValue));
+                            // Append the operation used to the procedure screen so the user can track what operation they selected
+                            procedureScreen.append("*");
+                            // Reset the results screen with a zero ('0') so that the user can enter in the next number
+                            resultsScreen.setText("0");
+                            // Set the text color of the button to white so the user can see that it is actively selected
+                            multiplyBtn.setTextColor(Color.WHITE);
+                            // Set the operation variable to true so these steps won't be repeated
+                            multiplyUsed = true;
+                        }
+                        // FIXME: Add support for the operation being used multiple times in a row without pressing '='
+                        else{
+                            multiplyBtn.setTextColor(Color.BLACK);
+                            secondValue = Double.valueOf(resultsScreen.getText().toString());
+                            resultValue = firstValue * secondValue;
+                            resultsScreen.setText(Double.toString(resultValue));
+                        }
 
                         break;
-                    // When button '-' is pressed
+
+                    // When button '-' is pressed [subtract]
                     case R.id.subtractBtn:
-                        resultsScreen.append("-");
+                        // If the subtract function hasn't been used, compute for the first time
+                        if(subtractUsed == false){
+                            // Retrieve the first value entered into the results screen
+                            firstValue = Double.valueOf(resultsScreen.getText().toString());
+                            // Add the value from the results screen to the procedure screen so the user can track their commands
+                            procedureScreen.setText(Double.toString(firstValue));
+                            // Append the operation used to the procedure screen so the user can track what operation they selected
+                            procedureScreen.append("-");
+                            // Reset the results screen with a zero ('0') so that the user can enter in the next number
+                            resultsScreen.setText("0");
+                            // Set the text color of the button to white so the user can see that it is actively selected
+                            subtractBtn.setTextColor(Color.WHITE);
+                            // Set the operation variable to true so these steps won't be repeated
+                            subtractUsed = true;
+                        }
+                        // FIXME: Add support for the operation being used multiple times in a row without pressing '='
+                        else{
+                            subtractBtn.setTextColor(Color.BLACK);
+                            secondValue = Double.valueOf(resultsScreen.getText().toString());
+                            resultValue = firstValue + secondValue;
+                            resultsScreen.setText(Double.toString(resultValue));
+                        }
 
                         break;
-                    // When button '+' is pressed
+
+                    // When button '+' is pressed [add]
                     case R.id.addBtn:
-                        resultsScreen.append("+");
+                        // If the add function hasn't been used, compute for the first time
+                        if(addUsed == false){
+                            // Retrieve the first value entered into the results screen
+                            firstValue = Double.valueOf(resultsScreen.getText().toString());
+                            // Add the value from the results screen to the procedure screen so the user can track their commands
+                            procedureScreen.setText(Double.toString(firstValue));
+                            // Append the operation used to the procedure screen so the user can track what operation they selected
+                            procedureScreen.append("+");
+                            // Reset the results screen with a zero ('0') so that the user can enter in the next number
+                            resultsScreen.setText("0");
+                            // Set the text color of the button to white so the user can see that it is actively selected
+                            addBtn.setTextColor(Color.WHITE);
+                            // Set the operation variable to true so these steps won't be repeated
+                            addUsed = true;
+                        }
+                        // FIXME: Add support for the operation being used multiple times in a row without pressing '='
+                        else{
+                            addBtn.setTextColor(Color.BLACK);
+                            secondValue = Double.valueOf(resultsScreen.getText().toString());
+                            resultValue = firstValue + secondValue;
+                            resultsScreen.setText(Double.toString(resultValue));
+                        }
 
                         break;
-                    // When button '=' is pressed
+
+                    // When button '=' is pressed [equals]
                     case R.id.equalsBtn:
+                        // Retrieves the second value that was entered into the results screen
+                        secondValue = Double.valueOf(resultsScreen.getText().toString());
+
+                        if(addUsed == true){
+                            // If the add operation is detected, perform the operation and store in a results value
+                            resultValue = firstValue + secondValue;
+                            // Reset the operation value so it can be activated again
+                            addUsed = false;
+                            // Reset the operations text color
+                            addBtn.setTextColor(Color.BLACK);
+                            // Add the second input value to the procedure screen
+                            procedureScreen.append(Double.toString(secondValue));
+                            // Add the newly computed result to the results screen
+                            resultsScreen.setText(Double.toString(resultValue));
+                        }
+                        else if(subtractUsed == true){
+                            // If the subtract operation is detected, perform the operation and store in a results value
+                            resultValue = firstValue - secondValue;
+                            // Reset the operation value so it can be activated again
+                            subtractUsed = false;
+                            // Reset the operations text color
+                            subtractBtn.setTextColor(Color.BLACK);
+                            // Add the second input value to the procedure screen
+                            procedureScreen.append(Double.toString(secondValue));
+                            // Add the newly computed result to the results screen
+                            resultsScreen.setText(Double.toString(resultValue));
+                        }
+                        else if(multiplyUsed == true){
+                            // If the multiply operation is detected, perform the operation and store in a results value
+                            resultValue = firstValue * secondValue;
+                            // Reset the operation value so it can be activated again
+                            multiplyUsed = false;
+                            // Reset the operations text color
+                            multiplyBtn.setTextColor(Color.BLACK);
+                            // Add the second input value to the procedure screen
+                            procedureScreen.append(Double.toString(secondValue));
+                            // Add the newly computed result to the results screen
+                            resultsScreen.setText(Double.toString(resultValue));
+                        }
+                        else if(divideUsed == true){
+                            // If the divide operation is detected, perform the operation and store in a results value
+                            resultValue = firstValue / secondValue;
+                            // Reset the operation value so it can be activated again
+                            divideUsed = false;
+                            // Reset the operations text color
+                            divideBtn.setTextColor(Color.BLACK);
+                            // Add the second input value to the procedure screen
+                            procedureScreen.append(Double.toString(secondValue));
+                            // Add the newly computed result to the results screen
+                            resultsScreen.setText(Double.toString(resultValue));
+
+                        }
+                        else{
+                            // If the equals button is hit repeatdly, leave the current value on the screen
+                            resultsScreen.setText(resultsScreen.getText().toString());
+                        }
 
                         break;
-                    // When button '.' is pressed (decimal)
+
+                    // When button '.' is pressed [decimal]
                     case R.id.decimalBtn:
-                        resultsScreen.append(".");
+                        // Takes the values from the results screen and puts in a screen to find is a decimal has been used
+                        String decimalDetect = resultsScreen.getText().toString();
+                        // Only adds a decimal if there is no decimal detected in the results screen
+                        if(!decimalDetect.contains(".")){
+                            // Appends a decimal to the results screen where the user has entered in a value
+                            resultsScreen.append(".");
+                        }
 
                         break;
 
                     // Defining the procedure for the numerical buttons
+
                     // When button '0' is pressed
                     case R.id.zeroBtn:
-                        resultsScreen.append("0");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("0");
+                        }
+                        else{
+                            resultsScreen.append("0");
+                        }
 
                         break;
+
                     // When button '1' is pressed
                     case R.id.oneBtn:
-                        resultsScreen.append("1");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("1");
+                        }
+                        else{
+                            resultsScreen.append("1");
+                        }
 
                         break;
+
                     // When button '2' is pressed
                     case R.id.twoBtn:
-                        resultsScreen.append("2");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("2");
+                        }
+                        else{
+                            resultsScreen.append("2");
+                        }
 
                         break;
+
                     // When button '3' is pressed
                     case R.id.threeBtn:
-                        resultsScreen.append("3");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("3");
+                        }
+                        else{
+                            resultsScreen.append("3");
+                        }
 
                         break;
+
                     // When button '4' is pressed
                     case R.id.fourBtn:
-                        resultsScreen.append("4");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("4");
+                        }
+                        else{
+                            resultsScreen.append("4");
+                        }
 
                         break;
+
                     // When button '5' is pressed
                     case R.id.fiveBtn:
-                        resultsScreen.append("5");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("5");
+                        }
+                        else{
+                            resultsScreen.append("5");
+                        }
 
                         break;
+
                     // When button '6' is pressed
                     case R.id.sixBtn:
-                        resultsScreen.append("6");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("6");
+                        }
+                        else{
+                            resultsScreen.append("6");
+                        }
 
                         break;
+
                     // When button '7' is pressed
                     case R.id.sevenBtn:
-                        resultsScreen.append("7");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("7");
+                        }
+                        else{
+                            resultsScreen.append("7");
+                        }
 
                         break;
+
                     // When button '8' is pressed
                     case R.id.eightBtn:
-                        resultsScreen.append("8");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("8");
+                        }
+                        else{
+                            resultsScreen.append("8");
+                        }
 
                         break;
+
                     // When button '9' is pressed
                     case R.id.nineBtn:
-                        resultsScreen.append("9");
+                        // Gets the current value from the results screen and converts it to a string and then to a double
+                        currentValueString = resultsScreen.getText().toString();
+                        currentValueDouble = Double.valueOf(currentValueString);
+
+                        // If the only value on the screen is a 0, replace it with the number pressed, else, append the number
+                        if(currentValueDouble == 0 && currentValueString.length() == 1){
+                            resultsScreen.setText("9");
+                        }
+                        else{
+                            resultsScreen.append("9");
+                        }
 
                         break;
                 }// End switch statement
             }
         };
 
-        // Setting the click listener
+        // Setting the click listeners
 
         // Setting the click listener for the operation buttons
         divideBtn.setOnClickListener(activeListener);
@@ -151,6 +452,7 @@ public class MainActivity extends AppCompatActivity {
         addBtn.setOnClickListener(activeListener);
         equalsBtn.setOnClickListener(activeListener);
         decimalBtn.setOnClickListener(activeListener);
+        negateBtn.setOnClickListener(activeListener);
 
         // Setting the click listener for the numerical buttons
         zeroBtn.setOnClickListener(activeListener);
@@ -166,19 +468,33 @@ public class MainActivity extends AppCompatActivity {
 
         // Setting the clear button and implementing its functionality
         final Button clear = findViewById(R.id.clearBtn);
-        clear.setOnClickListener(new View.OnClickListener() {
+        clear.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
+                // When the clear button is selected, replace the procedure screen value with nothing
+                procedureScreen.setText("");
                 // When the clear button is selected, replace the current results screen value with 0
                 resultsScreen.setText("0");
+
+                // Reset operations in use back to false so no operation is active
+                addUsed = false;
+                subtractUsed = false;
+                multiplyUsed = false;
+                divideUsed = false;
+
+                // Reset the colors of the buttona back to black
+                addBtn.setTextColor(Color.BLACK);
+                multiplyBtn.setTextColor(Color.BLACK);
+                divideBtn.setTextColor(Color.BLACK);
+                subtractBtn.setTextColor(Color.BLACK);
             }
         });
 
         // Setting the backspace button and implementing it's functionality
         final Button backspace = findViewById(R.id.backspaceBtn);
-        backspace.setOnClickListener(new View.OnClickListener() {
+        backspace.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 // Gets the current values stored in the results screen
                 String currentValue = resultsScreen.getText().toString();
 
@@ -193,13 +509,14 @@ public class MainActivity extends AppCompatActivity {
                     resultsScreen.setText(currentValue);
                 }
                 // If there is one value in the screen to be removed, replace with 0
-                else if(len == 1) {
+                else if(len == 1){
                     resultsScreen.setText("0");
                 }
                 // If there is is no value in the screen to be removed, set to 0
-                else {
+                else{
                     resultsScreen.setText("0");
                 }
+                // FIXME: set operand uses to false if they were deleted
             }
         });
 
