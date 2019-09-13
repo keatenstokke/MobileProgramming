@@ -516,7 +516,7 @@ public class MainActivity extends AppCompatActivity{
                 else{
                     resultsScreen.setText("0");
                 }
-                // FIXME: set operand uses to false if they were deleted
+                // FIXME: set operand uses to false if they were deleted/remove operations if they were deleted
             }
         });
 
