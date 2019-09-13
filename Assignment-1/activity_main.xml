@@ -5,18 +5,31 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Defines a screen at the top of the app to display the numbers and results of the calculator -->
-    <!-- Results are centered vertically in the screen and on the right side -->
-    <!-- 150dp height set for a larger screen size -->
+    <!-- Defines a procedure screen at the top of the app to display the numbers and operations selected by the user -->
+    <!-- Results are centered vertically in the screen and set on the right side -->
+    <!-- 75dp height set for a larger screen size -->
     <TextView
-        android:id="@+id/resultsScreen"
-        android:text="0"
+        android:id="@+id/procedureScreen"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="75dp"
         android:layout_margin="10dp"
         android:gravity="right|center_vertical"
         android:textColor="@android:color/black"
         android:textSize="30sp" />
+
+    <!-- Defines a results screen below the procedure screen to display the computed result and current number entered by the user -->
+    <!-- Results are centered vertically in the screen and set on the right side -->
+    <!-- 75dp height set for a larger screen size -->
+    <TextView
+        android:id="@+id/resultsScreen"
+        android:text="0"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="10dp"
+        android:gravity="right|center_vertical"
+        android:textColor="@android:color/black"
+        android:textSize="30sp" />
+
 
     <!-- Defined the first row of buttons for the calculator -->
     <LinearLayout
@@ -25,7 +38,7 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <!-- Defines the clear button to clear the screen of numbers/results -->
+        <!-- Defines the all clear button to reset the screens of numbers/results -->
         <Button
             android:backgroundTint="@android:color/darker_gray"
             android:id="@+id/clearBtn"
@@ -35,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
-        <!-- Defines the button to negate the current number displayed on the screen -->
+        <!-- Defines the button to negate/invert the current number displayed on the screen -->
         <Button
             android:backgroundTint="@android:color/darker_gray"
             android:id="@+id/negateBtn"
@@ -45,7 +58,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
-        <!-- Defines the button to backspace the last number on the screen -->
+        <!-- Defines the button to backspace/delete the last value on the screen -->
         <Button
             android:backgroundTint="@android:color/darker_gray"
             android:id="@+id/backspaceBtn"
@@ -213,7 +226,7 @@
         android:orientation="horizontal">
 
         <!-- Defines the number '0' for the calculator -->
-        <!-- The '0' button is twice as large as the other buttons for a clean display and most used number -->
+        <!-- The '0' button is twice as wide as the other buttons for a clean display and because it is the most used number -->
         <Button
             android:id="@+id/zeroBtn"
             android:text="0"
