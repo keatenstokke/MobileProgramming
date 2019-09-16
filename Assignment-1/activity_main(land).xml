@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Defines the entire layout for the app with the use of "LinearLayout" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Defines a procedure screen at the top of the app to display the numbers and operations selected by the user -->
+    <!-- Results are centered vertically in the screen and set on the right side -->
+    <!-- 40dp height set for a larger screen size -->
+    <TextView
+        android:id="@+id/procedureScreen"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:gravity="right|center_vertical"
+        android:textColor="@android:color/black"
+        android:textSize="30sp" />
+
+    <!-- Defines a results screen below the procedure screen to display the computed result and current number entered by the user -->
+    <!-- Results are centered vertically in the screen and set on the right side -->
+    <!-- 40dp height set for a larger screen size -->
+    <TextView
+        android:id="@+id/resultsScreen"
+        android:text="0"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:gravity="right|center_vertical"
+        android:textColor="@android:color/black"
+        android:textSize="30sp" />
+
+
+    <!-- Defined the first row of buttons for the calculator -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Defines the all clear button to reset the screens of numbers/results -->
+        <Button
+            android:backgroundTint="@android:color/darker_gray"
+            android:id="@+id/clearBtn"
+            android:text="AC"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the button to negate/invert the current number displayed on the screen -->
+        <Button
+            android:backgroundTint="@android:color/darker_gray"
+            android:id="@+id/negateBtn"
+            android:text="+/-"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the button to backspace/delete the last value on the screen -->
+        <Button
+            android:backgroundTint="@android:color/darker_gray"
+            android:id="@+id/backspaceBtn"
+            android:text="DEL"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the button to perform the division operation for the calculator -->
+        <!-- Color is defined as a light orange (like the iOS calculator) -->
+        <Button
+            android:backgroundTint="@android:color/holo_orange_light"
+            android:id="@+id/divideBtn"
+            android:text="/"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!-- Defines the second row of buttons for the calculator -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Defines the number '7' for the calculator -->
+        <Button
+            android:id="@+id/sevenBtn"
+            android:text="7"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the number '8' for the calculator -->
+        <Button
+            android:id="@+id/eightBtn"
+            android:text="8"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the number '9' for the calculator -->
+        <Button
+            android:id="@+id/nineBtn"
+            android:text="9"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the button to perform the multiply operation for the calculator -->
+        <!-- Color is defined as a light orange (like the iOS calculator) -->
+        <Button
+            android:backgroundTint="@android:color/holo_orange_light"
+            android:id="@+id/multiplyBtn"
+            android:text="*"
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!-- Defines the third row of buttons for the calculator -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Defines the number '4' for the calculator -->
+        <Button
+            android:id="@+id/fourBtn"
+            android:text="4"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the number '5' for the calculator -->
+        <Button
+            android:id="@+id/fiveBtn"
+            android:text="5"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the number '6' for the calculator -->
+        <Button
+            android:id="@+id/sixBtn"
+            android:text="6"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the button to perform the subtract operation for the calculator -->
+        <!-- Color is defined as a light orange (like the iOS calculator) -->
+        <Button
+            android:backgroundTint="@android:color/holo_orange_light"
+            android:id="@+id/subtractBtn"
+            android:text="-"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!-- Defines the fourth row of buttons for the calculator -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Defines the number '1' for the calculator -->
+        <Button
+            android:id="@+id/oneBtn"
+            android:text="1"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the number '2' for the calculator -->
+        <Button
+            android:id="@+id/twoBtn"
+            android:text="2"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the number '3' for the calculator -->
+        <Button
+            android:id="@+id/threeBtn"
+            android:text="3"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the button to perform the addition operation for the calculator -->
+        <!-- Color is defined as a light orange (like the iOS calculator) -->
+        <Button
+            android:backgroundTint="@android:color/holo_orange_light"
+            android:id="@+id/addBtn"
+            android:text="+"
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <!-- Defines the fifth row of buttons for the calculator -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Defines the number '0' for the calculator -->
+        <!-- The '0' button is twice as wide as the other buttons for a clean display and because it is the most used number -->
+        <Button
+            android:id="@+id/zeroBtn"
+            android:text="0"
+            android:textSize="30sp"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the number decimal point '.' for the calculator for floating point numbers -->
+        <Button
+            android:id="@+id/decimalBtn"
+            android:text="."
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <!-- Defines the button to perform the equals operation for the calculator -->
+        <!-- Color is defined as a light orange (like the iOS calculator) -->
+        <Button
+            android:backgroundTint="@android:color/holo_orange_light"
+            android:id="@+id/equalsBtn"
+            android:text="="
+            android:textSize="30sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>
