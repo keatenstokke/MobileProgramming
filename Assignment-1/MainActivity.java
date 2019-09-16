@@ -114,12 +114,19 @@ public class MainActivity extends AppCompatActivity{
                             // Set the operation variable to true so these steps won't be repeated
                             divideUsed = true;
                         }
-                        // FIXME: Add support for the operation being used multiple times in a row without pressing '='
                         else{
-                            divideBtn.setTextColor(Color.BLACK);
+                            // Pull the last entered value from the screen
                             secondValue = Double.valueOf(resultsScreen.getText().toString());
+                            // Append the value from the results screen to the procedure screen
+                            procedureScreen.append(Double.toString(secondValue));
+                            // Append the resulting operation to the procedure screen
+                            procedureScreen.append("=");
                             resultValue = firstValue / secondValue;
-                            resultsScreen.setText(Double.toString(resultValue));
+                            procedureScreen.append(Double.toString(resultValue));
+                            procedureScreen.append("/");
+                            // Reset the results screen for the next value
+                            resultsScreen.setText("0");
+                            firstValue = resultValue;
                         }
 
                         break;
@@ -141,12 +148,19 @@ public class MainActivity extends AppCompatActivity{
                             // Set the operation variable to true so these steps won't be repeated
                             multiplyUsed = true;
                         }
-                        // FIXME: Add support for the operation being used multiple times in a row without pressing '='
                         else{
-                            multiplyBtn.setTextColor(Color.BLACK);
+                            // Pull the last entered value from the screen
                             secondValue = Double.valueOf(resultsScreen.getText().toString());
+                            // Append the value from the results screen to the procedure screen
+                            procedureScreen.append(Double.toString(secondValue));
+                            // Append the resulting operation to the procedure screen
+                            procedureScreen.append("=");
                             resultValue = firstValue * secondValue;
-                            resultsScreen.setText(Double.toString(resultValue));
+                            procedureScreen.append(Double.toString(resultValue));
+                            procedureScreen.append("*");
+                            // Reset the results screen for the next value
+                            resultsScreen.setText("0");
+                            firstValue = resultValue;
                         }
 
                         break;
@@ -168,12 +182,19 @@ public class MainActivity extends AppCompatActivity{
                             // Set the operation variable to true so these steps won't be repeated
                             subtractUsed = true;
                         }
-                        // FIXME: Add support for the operation being used multiple times in a row without pressing '='
                         else{
-                            subtractBtn.setTextColor(Color.BLACK);
+                            // Pull the last entered value from the screen
                             secondValue = Double.valueOf(resultsScreen.getText().toString());
-                            resultValue = firstValue + secondValue;
-                            resultsScreen.setText(Double.toString(resultValue));
+                            // Append the value from the results screen to the procedure screen
+                            procedureScreen.append(Double.toString(secondValue));
+                            // Append the resulting operation to the procedure screen
+                            procedureScreen.append("=");
+                            resultValue = firstValue - secondValue;
+                            procedureScreen.append(Double.toString(resultValue));
+                            procedureScreen.append("-");
+                            // Reset the results screen for the next value
+                            resultsScreen.setText("0");
+                            firstValue = resultValue;
                         }
 
                         break;
@@ -195,12 +216,19 @@ public class MainActivity extends AppCompatActivity{
                             // Set the operation variable to true so these steps won't be repeated
                             addUsed = true;
                         }
-                        // FIXME: Add support for the operation being used multiple times in a row without pressing '='
                         else{
-                            addBtn.setTextColor(Color.BLACK);
+                            // Pull the last entered value from the screen
                             secondValue = Double.valueOf(resultsScreen.getText().toString());
+                            // Append the value from the results screen to the procedure screen
+                            procedureScreen.append(Double.toString(secondValue));
+                            // Append the resulting operation to the procedure screen
+                            procedureScreen.append("=");
                             resultValue = firstValue + secondValue;
-                            resultsScreen.setText(Double.toString(resultValue));
+                            procedureScreen.append(Double.toString(resultValue));
+                            procedureScreen.append("+");
+                            // Reset the results screen for the next value
+                            resultsScreen.setText("0");
+                            firstValue = resultValue;
                         }
 
                         break;
