@@ -1,13 +1,16 @@
 package com.example.calculator_1;
 
 // Default libraries that are imported
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 
 // Class of the main activity
 public class MainActivity extends AppCompatActivity{
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity{
     private boolean subtractUsed =  false;
     private boolean divideUsed =  false;
     private boolean multiplyUsed =  false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
