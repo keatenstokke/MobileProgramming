@@ -1,10 +1,8 @@
 package com.example.calculator_1;
 
 // Default libraries that are imported
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +20,8 @@ public class MainActivity extends AppCompatActivity{
     private double secondValue;
     private double resultValue;
     private double currentValueDouble;
+    private String screen1;
+    private String screen2;
 
     // The value of the screen in string form
     private String currentValueString;
@@ -32,9 +32,30 @@ public class MainActivity extends AppCompatActivity{
     private boolean divideUsed =  false;
     private boolean multiplyUsed =  false;
 
+    // Handle orientation changes by saving current state valyes
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+
+        // Pass in all of the private variables that need to be saved
+        outState.putString("procedure", screen1);
+        outState.putString("results", screen2);
+        outState.putBoolean("add", addUsed);
+        outState.putBoolean("sub", subtractUsed);
+        outState.putBoolean("divide", divideUsed);
+        outState.putBoolean("multiply", multiplyUsed);
+        outState.putDouble("first", firstValue);
+        outState.putDouble("second", secondValue);
+        outState.putDouble("inverted", invertedValue);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onCreate(final Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -71,6 +92,10 @@ public class MainActivity extends AppCompatActivity{
                 // Retrieve the value entered in by the user
                 final int id = v.getId();
 
+                // Save the current screen values in case of orientation change
+                screen1 = procedureScreen.getText().toString();
+                screen2 = resultsScreen.getText().toString();
+
                 // Select what to do when a distinct button is pressed
                 switch(id){
                     // Defining the procedure for each of the operation buttons
@@ -82,22 +107,25 @@ public class MainActivity extends AppCompatActivity{
                         // If current number is positive
                         if(firstValue > 0){
                             // Convert current number to negative by multiplying -1
-                            invertedValue = invertedValue * -1;
+                            invertedValue = invertedValue * -1.0;
                             // Copy the newly computed result to the results screen for further use
                             resultsScreen.setText(Double.toString(invertedValue));
                         }
                         // If current number is negative
                         else if(invertedValue < 0){
                             // Convert current number to positive by multiplying -1
-                            invertedValue = invertedValue * -1;
+                            invertedValue = invertedValue * -1.0;
                             // Copy the newly computed result to the results screen for further use
                             resultsScreen.setText(Double.toString(invertedValue));
                         }
-                        // If the current number is 0 or 0.0, do nothing
-                        else if(invertedValue == 0 || resultsScreen.getText().toString() == "0.0"){
-                            // Print the same value read back to the results screen
+                        // Else - whatever it is multiply by -1 anyways
+                        else{
+                            invertedValue = invertedValue * -1.0;
                             resultsScreen.setText(Double.toString(invertedValue));
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -132,6 +160,9 @@ public class MainActivity extends AppCompatActivity{
                             resultsScreen.setText("0");
                             firstValue = resultValue;
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -166,6 +197,9 @@ public class MainActivity extends AppCompatActivity{
                             resultsScreen.setText("0");
                             firstValue = resultValue;
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -200,6 +234,9 @@ public class MainActivity extends AppCompatActivity{
                             resultsScreen.setText("0");
                             firstValue = resultValue;
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -234,6 +271,9 @@ public class MainActivity extends AppCompatActivity{
                             resultsScreen.setText("0");
                             firstValue = resultValue;
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -295,6 +335,9 @@ public class MainActivity extends AppCompatActivity{
                             // If the equals button is hit repeatdly, leave the current value on the screen
                             resultsScreen.setText(resultsScreen.getText().toString());
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -307,6 +350,9 @@ public class MainActivity extends AppCompatActivity{
                             // Appends a decimal to the results screen where the user has entered in a value
                             resultsScreen.append(".");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -325,6 +371,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("0");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -341,6 +390,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("1");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -357,6 +409,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("2");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -373,6 +428,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("3");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -389,6 +447,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("4");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -405,6 +466,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("5");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -421,6 +485,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("6");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -437,6 +504,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("7");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -453,6 +523,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("8");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
 
@@ -469,6 +542,9 @@ public class MainActivity extends AppCompatActivity{
                         else{
                             resultsScreen.append("9");
                         }
+                        // Save the current screen values in case of orientation change
+                        screen1 = procedureScreen.getText().toString();
+                        screen2 = resultsScreen.getText().toString();
 
                         break;
                 }// End switch statement
@@ -552,5 +628,49 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        // If an orientation change happened then perform the following actions
+        if(savedInstanceState != null){
+            // Setting the screens back to what was on the screens before orientation change
+            screen1 = savedInstanceState.getString("procedure");
+            screen2 = savedInstanceState.getString("results");
+            procedureScreen.setText(screen1);
+            resultsScreen.setText(screen2);
+
+            // Setting the buttons text back to there original color if they were used or not
+            addUsed = savedInstanceState.getBoolean("add");
+            subtractUsed = savedInstanceState.getBoolean("subtract");
+            divideUsed = savedInstanceState.getBoolean("divide");
+            multiplyUsed = savedInstanceState.getBoolean("multiply");
+
+            // Retriving the last known values
+            firstValue = savedInstanceState.getDouble("first");
+            secondValue = savedInstanceState.getDouble("second");
+            invertedValue = savedInstanceState.getDouble("inverted");
+
+            if(addUsed == true){
+                addBtn.setTextColor(Color.WHITE);
+            }
+            else{
+                addBtn.setTextColor(Color.BLACK);
+            }
+            if(subtractUsed == true){
+                subtractBtn.setTextColor(Color.WHITE);
+            }
+            else{
+                subtractBtn.setTextColor(Color.BLACK);
+            }
+            if(divideUsed == true){
+                divideBtn.setTextColor(Color.WHITE);
+            }
+            else{
+                divideBtn.setTextColor(Color.BLACK);
+            }
+            if(multiplyUsed == true){
+                multiplyBtn.setTextColor(Color.WHITE);
+            }
+            else{
+                multiplyBtn.setTextColor(Color.BLACK);
+            }
+        }
     }
 }
