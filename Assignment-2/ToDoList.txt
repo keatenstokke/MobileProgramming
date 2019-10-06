@@ -1,0 +1,1 @@
+This repository is for the second assignment which is to create a To-Do list on Android that can add a note, delete a note, edit a note, and alert when a note has approached a deadline.
